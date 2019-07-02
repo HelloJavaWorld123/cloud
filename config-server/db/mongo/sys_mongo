@@ -1,0 +1,413 @@
+/* 1 */
+{
+    "_id" : ObjectId("5a98e7653bbae0c6cf1ae61f"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "mq-rabbit",
+    "associate" : true,
+    "level" : 0,
+    "conf" : {
+        "spring.rabbitmq.host" : "192.168.8.116",
+        "spring.rabbitmq.port" : "5672",
+        "spring.rabbitmq.username" : "admin",
+        "spring.rabbitmq.password" : "admin123",
+        "spring.rabbitmq.listener.retry.enabled" : "true",
+        "spring.rabbitmq.listener.retry.max-attempts" : "5",
+        "spring.rabbitmq.virtual-host" : "sup-dev"
+    }
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("5a9908a73bbae0c6cf1b4f81"),
+    "label" : "dev",
+    "application" : "application",
+    "associate" : true,
+    "profile" : "spring-boot",
+    "level" : 0,
+    "conf" : {
+        "server.context-path" : "/",
+        "management.security.enabled" : false,
+        "spring.http.encoding.charset" : "UTF-8",
+        "spring.http.encoding.enabled" : true,
+        "spring.http.encoding.force" : true,
+        "management.contextPath" : "/sup"
+    }
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("5a99095f3bbae0c6cf1b522d"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "dao-mybatis",
+    "associate" : true,
+    "level" : 0,
+    "conf" : {
+        "mybatis.mapper-locations" : "classpath*:mapper/**/*Mapper.xml",
+        "mybatis.type-aliases-package" : "com.jzy.**.model",
+        "mybatis.configuration.map-underscore-to-camel-case" : true
+    }
+}
+
+/* 4 */
+{
+    "_id" : ObjectId("5a9fa3163bbae0c6cf274d8e"),
+    "label" : "dev",
+    "application" : "default",
+    "profile" : "log",
+    "associate" : true,
+    "level" : 0,
+    "conf" : {
+        "logging.config" : "classpath:config/logback.xml"
+    }
+}
+
+/* 5 */
+{
+    "_id" : ObjectId("5aa0da0d3bbae0c6cf2a5362"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "ds-mongodb",
+    "associate" : true,
+    "level" : 1,
+    "conf" : {
+        "spring.data.mongodb.uri" : "mongodb://devrw:devrw@192.168.8.113:27017/dev"
+    }
+}
+
+/* 6 */
+{
+    "_id" : ObjectId("5ab8b1ba3bbae0c6cf662648"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "service-discovery",
+    "associate" : true,
+    "level" : 1,
+    "conf" : {
+        "eureka.client.serviceUrl.defaultZone" : "http://192.168.8.181:5555/sup/eureka/",
+        "eureka.instance.preferIpAddress" : "true",
+        "eureka.instance.status-page-url-path" : "/sup/info",
+        "eureka.instance.health-check-url-path" : "/sup/health",
+        "eureka.instance.instanceId" : "${spring.application.name}/${spring.cloud.client.ipAddress}:${server.port}",
+        "eureka.client.healthcheck.enabled " : true,
+        "eureka.instance.lease-renewal-interval-in-seconds" : 60,
+        "eureka.instance.lease-expiration-duration-in-seconds" : 90,
+        "eureka.instance.metadataMap.management.context-path" : "${management.context-path}",
+        "hystrix.command.default.execution.isolation.strategy" : "SEMAPHORE",
+        "hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds" : 120000
+    }
+}
+
+/* 7 */
+{
+    "_id" : ObjectId("5ad474513bbae0c6cf993ede"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "gateway",
+    "conf" : {
+        "spring.application.name" : "service-gateway",
+        "server.port" : "5050",
+        "server.context-path" : "/sup",
+        "management.security.enabled" : false,
+        "spring.http.encoding.charset" : "UTF-8",
+        "spring.http.encoding.enabled" : true,
+        "spring.http.encoding.force" : true,
+        "logging.config" : "classpath:config/logback.xml",
+        "management.contextPath" : "/sup",
+        "zuul.routes.auth.path" : "/api/auth/**",
+        "zuul.routes.auth.stripPrefix" : false,
+        "zuul.routes.auth.serviceId" : "service-auth",
+        "zuul.routes.test.path" : "/api/test/**",
+        "zuul.routes.test.stripPrefix" : false,
+        "zuul.routes.test.serviceId" : "service-test",
+        "zuul.routes.system.path" : "/api/system/**",
+        "zuul.routes.system.stripPrefix" : false,
+        "zuul.routes.system.serviceId" : "service-system",
+        "ribbon.ConnectTimeout" : 60000,
+        "ribbon.ReadTimeout" : 60000,
+        "ribbon.MaxAutoRetriesNextServer" : 3,
+        "ribbon.MaxAutoRetries" : 3,
+        "zuul.host.connect-timeout-millis" : 20000,
+        "zuul.host.socket-timeout-millis" : 10000,
+        "spring.cloud.loadbalancer.retry.enabled" : true,
+        "ribbon.OkToRetryOnAllOperations" : true,
+        "hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds" : 120000,
+        "spring.http.multipart.maxFileSize" : "10240KB",
+        "spring.http.multipart.maxRequestSize" : "10240KB"
+    },
+    "conf-ref" : [
+        "mq-rabbit",
+        "client-zipkin",
+        "service-discovery",
+        "ds-redisson"
+    ]
+}
+
+/* 8 */
+{
+    "_id" : ObjectId("5b30d5d43bbae0c6cf67d7a7"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "ds-postgresql",
+    "associate" : true,
+    "level" : 1,
+    "conf" : {
+        "spring.datasource.url" : "jdbc:postgresql://192.168.8.113:5432/dev_sup3",
+        "spring.datasource.username" : "admin",
+        "spring.datasource.password" : "123456",
+        "spring.datasource.driver-class-name" : "org.postgresql.Driver",
+        "spring.datasource.filters" : "stat"
+    }
+}
+
+/* 9 */
+{
+    "_id" : ObjectId("5b30d5df3bbae0c6cf67d7bf"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "ds-redis",
+    "associate" : true,
+    "level" : 0,
+    "conf" : {
+        "spring.redis.database" : "3",
+        "spring.redis.host" : "192.168.8.116",
+        "spring.redis.port" : "32768",
+        "spring.redis.password" : "123456",
+        "spring.redis.pool.max-active" : "8",
+        "spring.redis.pool.max-wait" : "1",
+        "spring.redis.pool.max-idle" : "8",
+        "spring.redis.pool.min-idle" : "4",
+        "spring.redis.timeout" : "20000"
+    }
+}
+
+/* 10 */
+{
+    "_id" : ObjectId("5b3c449a76479b1e1d6c7be2"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "auth",
+    "associate" : false,
+    "level" : 0,
+    "conf" : {
+        "spring.application.name" : "service-auth",
+        "spring.mvc.name" : "auth",
+        "spring.mvc.test" : "tyg-test",
+        "eureka.instance.metadata-map.APP-Version-Code" : "728",
+        "eureka.instance.metadata-map.group" : "0",
+        "server.port" : "5082"
+    },
+    "conf-ref" : [
+        "spring-boot",
+        "log",
+        "mq-rabbit",
+        "client-zipkin",
+        "ds-redisson",
+        "service-discovery"
+    ]
+}
+
+/* 11 */
+{
+    "_id" : ObjectId("5b3f1f4e76479b1e1d6dc79f"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "zipkin",
+    "associate" : false,
+    "level" : 1,
+    "conf" : {
+        "spring.application.name" : "service-zipkin",
+        "server.port" : "5051",
+        "spring.sleuth.enabled" : "false",
+        "spring.sleuth.sampler.percentage" : "1"
+    },
+    "conf-ref" : [
+        "service-discovery",
+        "mq-rabbit"
+    ]
+}
+
+/* 12 */
+{
+    "_id" : ObjectId("5b42d57176479b1e1d6fa967"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "ds-redisson",
+    "associate" : true,
+    "level" : 0,
+    "conf" : {
+        "spring.redisson.password" : "123456",
+        "spring.redisson.address" : "redis://192.168.8.116:32768",
+        "spring.redisson.database" : 4
+    }
+}
+
+/* 13 */
+{
+    "_id" : ObjectId("5b48433e76479b1e1d725120"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "system",
+    "associate" : false,
+    "level" : 0,
+    "conf" : {
+        "spring.application.name" : "service-system",
+        "spring.mvc.name" : "system",
+        "eureka.instance.metadata-map.APP-Version-Code" : "728",
+        "eureka.instance.metadata-map.group" : "0",
+        "uuidgenerator.isRedis" : "true",
+        "s1saas.api.url" : "http://xxxxx",
+        "server.port" : "5083"
+    },
+    "conf-ref" : [
+        "spring-boot",
+        "log",
+        "mq-rabbit",
+        "client-zipkin",
+        "ds-redisson",
+        "dao-mybatis",
+        "ds-postgresql",
+        "service-discovery"
+    ]
+}
+
+/* 14 */
+{
+    "_id" : ObjectId("5b50377376479b1e1d75e74c"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "client-zipkin",
+    "associate" : true,
+    "level" : 0,
+    "conf" : {
+        "spring.sleuth.sampler.percentage" : "1"
+    }
+}
+
+/* 15 */
+{
+    "_id" : ObjectId("5b570e2676479b1e1d783ad3"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "oss-aliyun",
+    "associate" : true,
+    "level" : 0,
+    "conf" : {
+        "s1.oss.aliyun.endPoint" : "oss-cn-beijing.aliyuncs.com",
+        "s1.oss.aliyun.accessKeyId" : "xxx",
+        "s1.oss.aliyun.accessKeySecret" : "xxx",
+        "s1.oss.aliyun.bucketName" : "wx-sup-test"
+    }
+}
+
+/* 16 */
+{
+    "_id" : ObjectId("5bd1203357c254007584aaec"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "e-mail",
+    "associate" : true,
+    "level" : 0,
+    "conf" : {
+        "spring.mail.host" : "smtp.exmail.qq.com",
+        "spring.mail.username" : "765161118@qq.com",
+        "spring.mail.password" : "123456",
+        "spring.mail.to" : "765161118@qq.com,765161119@qq.com",
+        "spring.mail.default-encoding" : "UTF-8",
+        "spring.mail.properties.mail.smtp.auth" : true,
+        "spring.mail.properties.mail.smtp.starttls.enable" : true,
+        "spring.mail.properties.mail.smtp.starttls.required" : true,
+        "spring.mail.port" : "465",
+        "spring.mail.properties.mail.smtp.socketFactory.port" : "465",
+        "spring.mail.properties.mail.smtp.socketFactory.class" : "javax.net.ssl.SSLSocketFactory",
+        "spring.mail.properties.mail.smtp.socketFactory.fallback" : false
+    }
+}
+
+/* 17 */
+{
+    "_id" : ObjectId("5a9909213bbae0c6cf1b5138"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "test",
+    "associate" : null,
+    "level" : null,
+    "conf" : {
+        "spring.application.name" : "service-test",
+        "spring.mvc.name" : "test",
+        "eureka.instance.metadata-map.APP-Version-Code" : "728",
+        "eureka.instance.metadata-map.group" : "0",
+        "server.port" : "5080"
+    },
+    "conf-ref" : [
+        "spring-boot",
+        "ds-postgresql",
+        "dao-mybatis-plus",
+        "log",
+        "service-discovery",
+        "mq-rabbit",
+        "ds-redisson"
+    ]
+}
+
+/* 18 */
+{
+    "_id" : ObjectId("5c3340d809dde870c97fc9ee"),
+    "label" : "default",
+    "application" : "application",
+    "profile" : "dao-mybatis-plus",
+    "associate" : true,
+    "level" : 0,
+    "conf" : {
+        "mybatis-plus.mapper-locations" : "classpath*:mapper/**/*Mapper.xml",
+        "mybatis-plus.type-aliases-package" : "com.jzy.**.model",
+        "mybatis-plus.configuration.map-underscore-to-camel-case" : true,
+        "mybatis-plus.global-config.db-config.column-underline" : true,
+        "mybatis-plus.global-config.db-config.logic-delete-value" : 1,
+        "mybatis-plus.global-config.db-config.logic-not-delete-value" : 0
+    }
+}
+
+/* 19 */
+{
+    "_id" : ObjectId("5ca1cb6913deeae28b51da40"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "sharedbtest",
+    "associate" : false,
+    "level" : 0,
+    "conf" : {
+        "spring.application.name" : "service-sharedbtest",
+        "spring.mvc.name" : "sharedbtest",
+        "eureka.instance.metadata-map.APP-Version-Code" : "728",
+        "eureka.instance.metadata-map.group" : "0",
+        "server.port" : "5090"
+    },
+    "conf-ref" : [
+        "spring-boot",
+        "ds-postgresql",
+        "dao-mybatis-plus",
+        "log",
+        "service-discovery",
+        "mq-rabbit",
+        "e-mail",
+        "ds-redisson"
+    ]
+}
+
+/* 20 */
+{
+    "_id" : ObjectId("5cd53a1fbe28b0059e7a3426"),
+    "label" : "dev",
+    "application" : "application",
+    "profile" : "ds-mysql",
+    "associate" : true,
+    "level" : 1,
+    "conf" : {
+        "spring.datasource.url" : "jdbc:mysql://192.168.8.218:3306/dev_sup3?useUnicode=true&characterEncoding=utf8",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "123456",
+        "spring.datasource.driver-class-name" : "com.mysql.jdbc.Driver"
+    }
+}

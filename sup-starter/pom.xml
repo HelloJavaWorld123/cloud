@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sup3</artifactId>
+        <groupId>com.jzy</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>sup-starter</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>starter-log</module>
+        <module>starter-email</module>
+        <module>starter-monitor-cat</module>
+        <module>starter-feign</module>
+        <module>starter-redisson</module>
+        <module>starter-swagger</module>
+        <module>starter-oss-aliyun</module>
+        <module>starter-pkgeneration</module>
+        <module>starter-boot</module>
+        <module>starter-druid</module>
+        <module>starter-mybatis-plus</module>
+        <module>starter-cache</module>
+        <module>starter-sms</module>
+        <module>starter-pds</module>
+        <module>starter-sharedb</module>
+        <module>starter-kafka</module>
+        <module>starter-mongodb</module>
+        <module>starter-rabbitmq</module>
+        <module>starter-ws</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.jzy</groupId>
+            <artifactId>sup-framework</artifactId>
+            <version>${version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

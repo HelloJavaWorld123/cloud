@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <modules>
+        <module>sup-starter</module>
+        <module>config-server</module>
+        <module>gateway-server</module>
+        <module>sup-framework</module>
+        <module>eureka-server</module>
+        <module>hystrix-dashboard-server</module>
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.5.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.jzy</groupId>
+    <artifactId>sup3</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>sup3</name>
+    <url>http://maven.apache.org</url>
+    <description>sup3 服务</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <spring.cloud.version>Greenwich.SR1</spring.cloud.version>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.java>1.8</project.build.java>
+        <mybatis.spring.boot.version>1.2.1</mybatis.spring.boot.version>
+        <springfox.swagger2.version>2.9.2</springfox.swagger2.version>
+        <fastjson.version>1.2.31</fastjson.version>
+        <commons.lang3.version>3.5</commons.lang3.version>
+        <commons.collections.version>3.2.1</commons.collections.version>
+
+        <lombok.version>1.16.14</lombok.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+        <commons-io.version>1.3.2</commons-io.version>
+        <postgresql.version>9.3-1101-jdbc4</postgresql.version>
+        <pagehelper.version>1.2.5</pagehelper.version>
+        <dubbo.spring.boot>1.0.2</dubbo.spring.boot>
+        <!--这个参数不要动有发布控制-->
+        <sup.strategy.mark></sup.strategy.mark>
+        <sup.monitor.cat>SUP3.0</sup.monitor.cat>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+
+            </dependency>
+            <!-- postgresql驱动包 -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>42.2.2</version>
+            </dependency>
+
+            <!-- mysql连接驱动包-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.26</version>
+            </dependency>
+
+
+            <!-- 汉子转拼音组件-->
+            <dependency>
+                <groupId>com.belerweb</groupId>
+                <artifactId>pinyin4j</artifactId>
+                <version>${pinyin4j.version}</version>
+            </dependency>
+
+            <!-- 流处理组件-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-reactor-netty</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-integration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.netty</groupId>-->
+<!--            <artifactId>netty-codec-http</artifactId>-->
+<!--            <version>${netty.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.netty</groupId>-->
+<!--            <artifactId>netty-transport-native-epoll</artifactId>-->
+<!--            <version>${netty.version}</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons.collections.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--服务链路追踪-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+        <!--数据传输-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>4.11</version>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>2.1.5</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+    <!-- 开发配置 -->
+    <profiles>
+
+        <profile>
+            <id>dev</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </dependency>
+            </dependencies>
+            <properties>
+                <packaging>jar</packaging>
+                <sup.env.label>dev</sup.env.label>
+                <sup.eureka.port>5550</sup.eureka.port>
+
+                <sup.configcenter.port>5555</sup.configcenter.port>
+                <sup.configcenter.url>http://192.168.8.130</sup.configcenter.url>
+                <sup.configcenter.path>/sup</sup.configcenter.path>
+
+                <sup.mq.host>192.168.8.116</sup.mq.host>
+                <sup.mq.port>5672</sup.mq.port>
+                <sup.mq.username>admin</sup.mq.username>
+                <sup.mq.password>admin123</sup.mq.password>
+                <sup.mq.virtual>sup-dev</sup.mq.virtual>
+
+                <sup.mongodb.db>dev</sup.mongodb.db>
+                <sup.mongodb.host>192.168.8.113</sup.mongodb.host>
+                <sup.mongodb.port>27017</sup.mongodb.port>
+                <sup.mongodb.username>devrw</sup.mongodb.username>
+                <sup.mongodb.password>devrw132</sup.mongodb.password>
+                <sup.mongodb.collection.name>sys_envi_dev</sup.mongodb.collection.name>
+
+                <sup.docker.host>http://192.168.8.130:2375</sup.docker.host>
+                <sup.docker.registry>192.168.8.130:5000</sup.docker.registry>
+                <sup.docker.tag>dev</sup.docker.tag>
+
+                <sup.logstash.host>192.168.8.124</sup.logstash.host>
+                <sup.logstash.port>4560</sup.logstash.port>
+
+                <sup.log.prefix>/data/logs/sup</sup.log.prefix>
+                <sup.log.level>debug</sup.log.level>
+
+
+            </properties>
+
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                            <configuration>
+                                <mainClass>com.jzy.sup.starter.boot.Application</mainClass>
+                                <outputDirectory>
+                                    ${project.build.directory}
+                                </outputDirectory>
+                                <finalName>app</finalName>
+                                <executable>true</executable>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>repackage</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>com.spotify</groupId>
+                            <artifactId>docker-maven-plugin</artifactId>
+                            <version>1.0.0</version>
+                            <configuration>
+                                <imageName>${sup.docker.registry}/${project.name}${sup.strategy.mark}:${sup.docker.tag}_${version}</imageName>
+                                <baseImage>${sup.docker.registry}/alpine-jre8u211:dev-1.0.0</baseImage>
+                                <dockerHost>${sup.docker.host}</dockerHost>
+                                <volumes>
+                                    <volume>/data</volume>
+                                </volumes>
+                                <entryPoint>["java", "-jar", "-Xms256m","-Xmx1024m","-Duser.timezone=GMT+08","/app.jar"]
+                                </entryPoint>
+                                <resources>
+                                    <resource>
+                                        <targetPath>/</targetPath>
+                                        <directory>${project.build.directory}</directory>
+                                        <include>app.jar</include>
+                                    </resource>
+                                </resources>
+                                <imageTags>
+                                    <imageTag>
+                                        ${sup.docker.tag}_${version}
+                                    </imageTag>
+                                    <imageTag>
+                                        ${sup.docker.tag}
+                                    </imageTag>
+                                </imageTags>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </dependency>
+            </dependencies>
+            <properties>
+                <packaging>jar</packaging>
+                <sup.env.label>dev</sup.env.label>
+                <sup.eureka.port>5550</sup.eureka.port>
+
+                <sup.configcenter.port>5555</sup.configcenter.port>
+                <sup.configcenter.url>http://172.21.7.21</sup.configcenter.url>
+                <sup.configcenter.path>/sup</sup.configcenter.path>
+
+                <sup.mq.host>172.21.2.149</sup.mq.host>
+                <sup.mq.port>5672</sup.mq.port>
+                <sup.mq.username>guest</sup.mq.username>
+                <sup.mq.password>jzy@2019</sup.mq.password>
+                <sup.mq.virtual>sup-test</sup.mq.virtual>
+
+                <sup.mongodb.db>sup_test</sup.mongodb.db>
+                <sup.mongodb.host>172.21.12.102</sup.mongodb.host>
+                <sup.mongodb.port>27017</sup.mongodb.port>
+                <sup.mongodb.username>devrw</sup.mongodb.username>
+                <sup.mongodb.password>devrw132</sup.mongodb.password>
+                <sup.mongodb.collection.name>sys_envi_test</sup.mongodb.collection.name>
+
+                <sup.docker.host>http://192.168.8.119:2375</sup.docker.host>
+                <sup.docker.registry>192.168.8.119:5000</sup.docker.registry>
+                <sup.docker.tag>test</sup.docker.tag>
+
+                <sup.logstash.host>172.19.69.133</sup.logstash.host>
+                <sup.logstash.port>4560</sup.logstash.port>
+
+                <sup.log.prefix>/data/logs/sup</sup.log.prefix>
+                <sup.log.level>debug</sup.log.level>
+            </properties>
+
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                            <configuration>
+                                <mainClass>Application</mainClass>
+                                <outputDirectory>
+                                    ${project.build.directory}
+                                </outputDirectory>
+                                <finalName>app</finalName>
+                                <executable>true</executable>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>repackage</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>com.spotify</groupId>
+                            <artifactId>docker-maven-plugin</artifactId>
+                            <version>1.0.0</version>
+                            <configuration>
+                                <imageName>${sup.docker.registry}/${project.name}${sup.strategy.mark}:${sup.docker.tag}_${version}</imageName>
+                                <baseImage>${sup.docker.registry}/centos74-jdk1.8.0:v1.1</baseImage>
+                                <dockerHost>${sup.docker.host}</dockerHost>
+                                <volumes>
+                                    <volume>/data</volume>
+                                </volumes>
+                                <entryPoint>["java", "-jar", "-Xms256m","-Xmx1024m","-Duser.timezone=GMT+08","/app.jar"]
+                                </entryPoint>
+                                <resources>
+                                    <resource>
+                                        <targetPath>/</targetPath>
+                                        <directory>${project.build.directory}</directory>
+                                        <include>app.jar</include>
+                                    </resource>
+                                </resources>
+                                <imageTags>
+                                    <imageTag>
+                                        ${sup.docker.tag}_${version}
+                                    </imageTag>
+                                    <imageTag>
+                                        ${sup.docker.tag}
+                                    </imageTag>
+                                </imageTags>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>bate</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </dependency>
+            </dependencies>
+            <properties>
+                <packaging>jar</packaging>
+                <sup.env.label>dev</sup.env.label>
+                <sup.configcenter.port>5555</sup.configcenter.port>
+                <sup.configcenter.url>http://192.168.8.130</sup.configcenter.url>
+                <sup.configcenter.path>/sup</sup.configcenter.path>
+
+                <sup.mq.host>192.168.8.116</sup.mq.host>
+                <sup.mq.port>5672</sup.mq.port>
+                <sup.mq.username>admin</sup.mq.username>
+                <sup.mq.password>admin123</sup.mq.password>
+                <sup.mq.virtual>sup-dev</sup.mq.virtual>
+
+                <sup.mongodb.db>dev</sup.mongodb.db>
+                <sup.mongodb.host>192.168.8.113</sup.mongodb.host>
+                <sup.mongodb.port>27017</sup.mongodb.port>
+                <sup.mongodb.username>devrw</sup.mongodb.username>
+                <sup.mongodb.password>devrw132</sup.mongodb.password>
+
+                <sup.docker.host>http://192.168.8.119:2375</sup.docker.host>
+                <sup.docker.registry>192.168.8.119:5000</sup.docker.registry>
+                <sup.docker.tag>bate</sup.docker.tag>
+
+                <sup.logstash.host>192.168.8.124</sup.logstash.host>
+                <sup.logstash.port>4560</sup.logstash.port>
+
+                <sup.log.prefix>/data/logs/sup</sup.log.prefix>
+                <sup.log.level>debug</sup.log.level>
+            </properties>
+
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                            <configuration>
+                                <mainClass>Application</mainClass>
+                                <outputDirectory>
+                                    ${project.build.directory}
+                                </outputDirectory>
+                                <finalName>app</finalName>
+                                <executable>true</executable>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>repackage</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>com.spotify</groupId>
+                            <artifactId>docker-maven-plugin</artifactId>
+                            <version>1.0.0</version>
+                            <configuration>
+                                <imageName>${sup.docker.registry}/${project.name}${sup.strategy.mark}:${sup.docker.tag}_${version}</imageName>
+                                <baseImage>${sup.docker.registry}/centos74-jdk1.8.0:v1.1</baseImage>
+                                <dockerHost>${sup.docker.host}</dockerHost>
+                                <volumes>
+                                    <volume>/data</volume>
+                                </volumes>
+                                <entryPoint>["java", "-jar", "-Xms256m","-Xmx1024m","-Duser.timezone=GMT+08","/app.jar"]
+                                </entryPoint>
+                                <resources>
+                                    <resource>
+                                        <targetPath>/</targetPath>
+                                        <directory>${project.build.directory}</directory>
+                                        <include>app.jar</include>
+                                    </resource>
+                                </resources>
+                                <imageTags>
+                                    <imageTag>
+                                        ${sup.docker.tag}_${version}
+                                    </imageTag>
+                                    <imageTag>
+                                        ${sup.docker.tag}
+                                    </imageTag>
+                                </imageTags>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+
+    </profiles>
+
+
+</project>
